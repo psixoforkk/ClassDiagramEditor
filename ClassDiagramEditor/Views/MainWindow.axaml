@@ -1,0 +1,109 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:ClassDiagramEditor.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			xmlns:views="clr-namespace:ClassDiagramEditor.Views.Controls"
+			xmlns:class="clr-namespace:ClassDiagramEditor.Models"
+			xmlns:conclass="clr-namespace:ClassDiagramEditor.Models.Connectors"
+        mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="960"
+		    Width="1280" Height="960"
+        x:Class="ClassDiagramEditor.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="ClassDiagramEditorByPsixoforkk">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<Window.Styles>
+		<Style Selector="RadioButton">
+			<Setter Property="HorizontalContentAlignment" Value="Left" />
+			<Setter Property="VerticalContentAlignment" Value="Center" />
+			<Setter Property="FontFamily" Value="Comic Sans MS" />
+			<Setter Property="FontSize" Value="23" />
+			<Setter Property="Width" Value="230" />
+			<Setter Property="Margin" Value="5" />
+		</Style>
+		<Style Selector="TextBlock.AddClass">
+			<Setter Property="FontFamily" Value="Comic Sans MS"/>
+			<Setter Property="HorizontalAlignment" Value="Center" />
+			<Setter Property="VerticalAlignment" Value="Center" />
+			<Setter Property="FontSize" Value="25" />
+			<Setter Property="Width" Value="180" />
+			<Setter Property="FontWeight" Value="Bold" />
+		</Style>
+		<Style Selector="MenuItem">
+			<Setter Property="FontFamily" Value="Comic Sans MS"/>
+			<Setter Property="FontWeight" Value="Bold" />
+		</Style>
+	</Window.Styles>
+
+    <Grid ColumnDefinitions="0.26*, *" RowDefinitions="0.05*, *">
+		<Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+			<WrapPanel>
+				<Menu Width="130" Height="50" VerticalAlignment="Center" HorizontalAlignment="Center">
+					<MenuItem Name="menuExport" Header="Экспортировать">
+						<MenuItem Header="Экспортировать в png" />
+						<MenuItem Header="Экспортировать в xml" />
+						<MenuItem Header="Экспортировать в json"/>
+						<MenuItem Header="Экспортировать в yaml"/>
+					</MenuItem>
+				</Menu>
+				<Menu Width="130" Height="50" VerticalAlignment="Center" HorizontalAlignment="Center">
+					<MenuItem Name="menuImport" Header="Импортировать">
+						<MenuItem Header="Импортировать из xml"/>
+						<MenuItem Header="Импортировать из json"/>
+						<MenuItem Header="Импортировать из yaml"/>
+					</MenuItem>
+				</Menu>
+			</WrapPanel>
+		</Border>
+		<Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+			<StackPanel>
+				<TextBlock Classes="AddClass" Text="Тип элемента" />
+				<RadioButton IsChecked="{Binding ClassDiagramCheck}" Content="Класс" GroupName="DiagramType" />
+				<RadioButton IsChecked="{Binding InterfaceDiagramCheck}" Content="Интерфейс" GroupName="DiagramType" />
+				<TextBlock Classes="AddClass" Text="Тип связи" />
+				<RadioButton Content="Зависимость" GroupName="ConnectorType" />
+				<RadioButton Content="Ассоциация" GroupName="ConnectorType" />
+				<RadioButton Content="Агрегация" GroupName="ConnectorType" />
+				<RadioButton Content="Композиция" GroupName="ConnectorType" />
+				<RadioButton Content="Наследование" GroupName="ConnectorType" />
+				<RadioButton Content="Имплементация" GroupName="ConnectorType" />
+				<TextBlock Classes="AddClass" Text="Управление" />
+				<RadioButton IsChecked="{Binding AddDiagramCheck}" Content="Добавление,&#10;Перемещение,&#10;Cоединение" GroupName="ControlType" />
+				<RadioButton IsChecked="{Binding ScaleDiagramCheck}" Content="Изменить размер" GroupName="ControlType" />
+				<RadioButton IsChecked="{Binding DeleteDiagramCheck}" Content="Удалить" GroupName="ControlType" />
+			</StackPanel>
+		</Border>
+		<Border BorderThickness="2" BorderBrush="Black" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" >
+			<ItemsControl PointerPressed="OnPointerPressed" DragDrop.AllowDrop="True" Items="{Binding Diagrams}">
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+						<Canvas Background="Transparent" Name="canvas"/>
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+
+				<ItemsControl.DataTemplates>
+					<DataTemplate DataType="{x:Type class:MyTypeClass}">
+						<views:ClassControl>
+							<views:ClassControl.RenderTransform>
+								<TransformGroup>
+									<TranslateTransform  X="{Binding StartPoint.X}" Y="{Binding StartPoint.Y}"/>
+								</TransformGroup>
+							</views:ClassControl.RenderTransform>
+						</views:ClassControl>
+					</DataTemplate>
+					<DataTemplate DataType="{x:Type conclass:AssociationConnectorClass}">
+						<Line StartPoint="{Binding StartPoint}"
+							  EndPoint="{Binding EndPoint}"
+							  Stroke="LawnGreen"
+							  StrokeThickness="2" />						
+					</DataTemplate>
+				</ItemsControl.DataTemplates>
+			</ItemsControl>
+		</Border>
+	</Grid>
+
+</Window>
