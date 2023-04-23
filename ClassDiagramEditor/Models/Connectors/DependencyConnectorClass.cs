@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ClassDiagramEditor.Models.Connectors
 {
-    public class AssociationConnectorClass : AbstractNotifyPropertyChanged, IType, IDisposable
+    public class DependencyConnectorClass : AbstractNotifyPropertyChanged, IType, IDisposable
     {
         private Point startPoint;
         private Point endPoint;
@@ -76,7 +76,7 @@ namespace ClassDiagramEditor.Models.Connectors
         public Point EndPoint
         {
             get => endPoint;
-            set 
+            set
             {
                 SetAndRaise(ref endPoint, value);
                 CalculateTip();

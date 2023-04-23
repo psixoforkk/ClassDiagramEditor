@@ -39,7 +39,7 @@
 		</Style>
 	</Window.Styles>
 
-    <Grid ColumnDefinitions="0.26*, *" RowDefinitions="0.05*, *">
+    <Grid Margin="5" ColumnDefinitions="0.26*, *" RowDefinitions="0.05*, *">
 		<Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
 			<WrapPanel>
 				<Menu Width="130" Height="50" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -65,12 +65,12 @@
 				<RadioButton IsChecked="{Binding ClassDiagramCheck}" Content="Класс" GroupName="DiagramType" />
 				<RadioButton IsChecked="{Binding InterfaceDiagramCheck}" Content="Интерфейс" GroupName="DiagramType" />
 				<TextBlock Classes="AddClass" Text="Тип связи" />
-				<RadioButton Content="Зависимость" GroupName="ConnectorType" />
-				<RadioButton Content="Ассоциация" GroupName="ConnectorType" />
-				<RadioButton Content="Агрегация" GroupName="ConnectorType" />
-				<RadioButton Content="Композиция" GroupName="ConnectorType" />
-				<RadioButton Content="Наследование" GroupName="ConnectorType" />
-				<RadioButton Content="Имплементация" GroupName="ConnectorType" />
+				<RadioButton IsChecked="{Binding AssociationConnectorCheck}" Content="Зависимость" GroupName="ConnectorType" />
+				<RadioButton IsChecked="{Binding InheritanceConnectorCheck}" Content="Ассоциация" GroupName="ConnectorType" />
+				<RadioButton IsChecked="{Binding AggregationConnectorCheck}" Content="Агрегация" GroupName="ConnectorType" />
+				<RadioButton IsChecked="{Binding CompositionConnectorCheck}" Content="Композиция" GroupName="ConnectorType" />
+				<RadioButton IsChecked="{Binding DependencyConnectorCheck}" Content="Наследование" GroupName="ConnectorType" />
+				<RadioButton IsChecked="{Binding ImplementationConnectorCheck}" Content="Имплементация" GroupName="ConnectorType" />
 				<TextBlock Classes="AddClass" Text="Управление" />
 				<RadioButton IsChecked="{Binding AddDiagramCheck}" Content="Добавление,&#10;Перемещение,&#10;Cоединение" GroupName="ControlType" />
 				<RadioButton IsChecked="{Binding ScaleDiagramCheck}" Content="Изменить размер" GroupName="ControlType" />
@@ -81,7 +81,7 @@
 			<ItemsControl PointerPressed="OnPointerPressed" DragDrop.AllowDrop="True" Items="{Binding Diagrams}">
 				<ItemsControl.ItemsPanel>
 					<ItemsPanelTemplate>
-						<Canvas Background="Transparent" Name="canvas"/>
+						<Canvas Width="{Binding $parent[Border].Width}" Height="{Binding $parent[Border].Height}" Background="Transparent" Name="canvas"/>
 					</ItemsPanelTemplate>
 				</ItemsControl.ItemsPanel>
 
@@ -95,11 +95,62 @@
 							</views:ClassControl.RenderTransform>
 						</views:ClassControl>
 					</DataTemplate>
+					<DataTemplate DataType="{x:Type class:MyTypeInterface}">
+						<views:InterfaceControl>
+							<views:InterfaceControl.RenderTransform>
+								<TransformGroup>
+									<TranslateTransform  X="{Binding StartPoint.X}" Y="{Binding StartPoint.Y}"/>
+								</TransformGroup>
+							</views:InterfaceControl.RenderTransform>
+						</views:InterfaceControl>
+					</DataTemplate>
 					<DataTemplate DataType="{x:Type conclass:AssociationConnectorClass}">
-						<Line StartPoint="{Binding StartPoint}"
-							  EndPoint="{Binding EndPoint}"
-							  Stroke="LawnGreen"
-							  StrokeThickness="2" />						
+						<views:AssociationConnectorControl 
+							CustomPointsStart="{Binding StartPoint}" 
+							CustomPointsEnd="{Binding EndPoint}" 
+							CustomFirstTipPointsEnd="{Binding FirstTipPoint}" 
+							CustomSecondTipPointsEnd="{Binding SecondTipPoint}">
+						</views:AssociationConnectorControl>
+					</DataTemplate>
+					<DataTemplate DataType="{x:Type conclass:InheritanceConnectorClass}">
+						<views:InheritanceConnectorControl
+							CustomPointsStart="{Binding StartPoint}"
+							CustomPointsEnd="{Binding EndPoint}"
+							CustomFirstTipPointsEnd="{Binding FirstTipPoint}"
+							CustomListTipPoints="{Binding ListPoint}">
+						</views:InheritanceConnectorControl>
+					</DataTemplate>
+					<DataTemplate DataType="{x:Type conclass:ImplementationConnectorClass}">
+						<views:ImplementationConnectorControl
+							CustomPointsStart="{Binding StartPoint}"
+							CustomPointsEnd="{Binding EndPoint}"
+							CustomFirstTipPointsEnd="{Binding FirstTipPoint}"
+							CustomListTipPoints="{Binding ListPoint}">
+						</views:ImplementationConnectorControl>
+					</DataTemplate>
+					<DataTemplate DataType="{x:Type conclass:DependencyConnectorClass}">
+						<views:DependencyConnectorControl
+							CustomPointsStart="{Binding StartPoint}"
+							CustomPointsEnd="{Binding EndPoint}"
+							CustomFirstTipPointsEnd="{Binding FirstTipPoint}"
+							CustomSecondTipPointsEnd="{Binding SecondTipPoint}">
+						</views:DependencyConnectorControl>
+					</DataTemplate>
+					<DataTemplate DataType="{x:Type conclass:AggregationConnectorClass}">
+						<views:AggregationConnectorControl
+							CustomPointsStart="{Binding StartPoint}"
+							CustomPointsEnd="{Binding EndPoint}"
+							CustomFirstTipPointsEnd="{Binding FirstTipPoint}"
+							CustomListTipPoints="{Binding ListPoint}">
+						</views:AggregationConnectorControl>
+					</DataTemplate>
+					<DataTemplate DataType="{x:Type conclass:CompositionConnectoClass}">
+						<views:CompositionConnectorControl
+							CustomPointsStart="{Binding StartPoint}"
+							CustomPointsEnd="{Binding EndPoint}"
+							CustomFirstTipPointsEnd="{Binding FirstTipPoint}"
+							CustomListTipPoints="{Binding ListPoint}">
+						</views:CompositionConnectorControl>
 					</DataTemplate>
 				</ItemsControl.DataTemplates>
 			</ItemsControl>

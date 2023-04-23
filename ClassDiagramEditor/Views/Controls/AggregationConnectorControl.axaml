@@ -1,0 +1,20 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:ClassDiagramEditor.Views.Controls">
+  <Design.PreviewWith>
+    <controls:AggregationConnectorControl />
+  </Design.PreviewWith>
+
+  <Style Selector="controls|AggregationConnectorControl">
+    <!-- Set Defaults -->
+    <Setter Property="Template">
+      <ControlTemplate>
+		  <Panel>
+			  <Line StartPoint="{TemplateBinding CustomPointsStart}" EndPoint="{TemplateBinding CustomPointsEnd}" Stroke="Black" StrokeThickness="2"/>
+			  <Line StartPoint="{TemplateBinding CustomPointsEnd}" EndPoint="{TemplateBinding CustomFirstTipPointsEnd}" Stroke="White" StrokeThickness="3"/>
+			  <Polygon Points="{TemplateBinding CustomListTipPoints}" Fill="Black" StrokeThickness="2" Stroke="Black"/>
+		  </Panel>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+</Styles>

@@ -3,17 +3,18 @@ using DynamicData.Binding;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ClassDiagramEditor.Models.Connectors
 {
-    public class AssociationConnectorClass : AbstractNotifyPropertyChanged, IType, IDisposable
+    public class InheritanceConnectorClass : AbstractNotifyPropertyChanged, IType, IDisposable
     {
         private Point startPoint;
         private Point endPoint;
         private Point firstTipPoint;
-        private Point secondTipPoint;
+        private List<Point> listPoint;
         private MyTypeClass firstDiagram;
         private MyTypeClass secondDiagram;
         public string Name { get; set; }
@@ -52,12 +53,19 @@ namespace ClassDiagramEditor.Models.Connectors
         }
         private void CalculateTip()
         {
-            Point newTopPoint = new Point(-10, -10);
-            Point newDownPoint = new Point(-10, 10);
+            Point newTopPoint = new Point(-10, 0);
+            Point newTopPoints = new Point(0, -10);
+            Point newTopPointss = new Point(0, 20);
             newTopPoint += EndPoint;
-            newDownPoint += EndPoint;
+            newTopPoints += newTopPoint;
+            newTopPointss += newTopPoints;
             FirstTipPoint = newTopPoint;
-            SecondTipPoint = newDownPoint;
+            ListPoint = new List<Point>();
+            ListPoint.Add(newTopPoint);
+            ListPoint.Add(newTopPoints);
+            ListPoint.Add(EndPoint);
+            ListPoint.Add(newTopPointss);
+            ListPoint.Add(FirstTipPoint);
         }
         private void OnFirstDiagramPositionChanged(object? sender, ChangeStartPointEventArgs e)
         {
@@ -66,6 +74,11 @@ namespace ClassDiagramEditor.Models.Connectors
         private void OnSecondDiagramPositionChanged(object? sender, ChangeStartPointEventArgs e)
         {
             EndPoint += e.NewStartPoint - e.OldStartPoint;
+        }
+        public List<Point> ListPoint
+        {
+            get => listPoint;
+            set => SetAndRaise(ref listPoint, value);
         }
         public Point StartPoint
         {
@@ -76,7 +89,7 @@ namespace ClassDiagramEditor.Models.Connectors
         public Point EndPoint
         {
             get => endPoint;
-            set 
+            set
             {
                 SetAndRaise(ref endPoint, value);
                 CalculateTip();
@@ -87,12 +100,6 @@ namespace ClassDiagramEditor.Models.Connectors
             get => firstTipPoint;
             set => SetAndRaise(ref firstTipPoint, value);
         }
-        public Point SecondTipPoint
-        {
-            get => secondTipPoint;
-            set => SetAndRaise(ref secondTipPoint, value);
-        }
-
         public void Dispose()
         {
             if (FirstDiagram != null)

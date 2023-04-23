@@ -9,5 +9,12 @@
     <Application.Styles>
         <FluentTheme Mode="Light"/>
 		<StyleInclude Source="/Views/Controls/ClassControl.axaml"/>
+		<StyleInclude Source="/Views/Controls/InterfaceControl.axaml"/>
+		<StyleInclude Source="/Views/Controls/AssociationConnectorControl.axaml"/>
+		<StyleInclude Source="/Views/Controls/InheritanceConnectorControl.axaml"/>
+		<StyleInclude Source="/Views/Controls/ImplementationConnectorControl.axaml"/>
+		<StyleInclude Source="/Views/Controls/AggregationConnectorControl.axaml"/>
+		<StyleInclude Source="/Views/Controls/CompositionConnectorControl.axaml"/>
+		<StyleInclude Source="/Views/Controls/DependencyConnectorControl.axaml"/>
     </Application.Styles>
 </Application>

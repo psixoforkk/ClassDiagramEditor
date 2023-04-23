@@ -1,0 +1,20 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:ClassDiagramEditor.Views.Controls">
+  <Design.PreviewWith>
+    <controls:DependencyConnectorControl/>
+  </Design.PreviewWith>
+
+  <Style Selector="controls|DependencyConnectorControl">
+    <!-- Set Defaults -->
+    <Setter Property="Template">
+      <ControlTemplate>
+		  <Panel>
+			  <Line StartPoint="{TemplateBinding CustomPointsStart}" EndPoint="{TemplateBinding CustomPointsEnd}" StrokeDashArray="1,2" Stroke="Black" StrokeThickness="2"/>
+			  <Line StartPoint="{TemplateBinding CustomPointsEnd}" EndPoint="{TemplateBinding CustomFirstTipPointsEnd}" Stroke="Black" StrokeThickness="2"/>
+			  <Line StartPoint="{TemplateBinding CustomPointsEnd}" EndPoint="{TemplateBinding CustomSecondTipPointsEnd}" Stroke="Black" StrokeThickness="2"/>
+		  </Panel>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+</Styles>

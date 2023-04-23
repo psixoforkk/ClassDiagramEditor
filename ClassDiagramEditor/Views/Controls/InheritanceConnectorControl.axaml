@@ -1,0 +1,20 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:ClassDiagramEditor.Views.Controls">
+  <Design.PreviewWith>
+    <controls:InheritanceConnectorControl Height="20" Width="100" CustomPointsStart="0 10" CustomPointsEnd="100 10" CustomFirstTipPointsEnd="80, 10"/>
+  </Design.PreviewWith>
+
+  <Style Selector="controls|InheritanceConnectorControl">
+    <!-- Set Defaults -->
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Panel>
+			<Line StartPoint="{TemplateBinding CustomPointsStart}" EndPoint="{TemplateBinding CustomPointsEnd}" Stroke="Black" StrokeThickness="2"/>
+			<Line StartPoint="{TemplateBinding CustomPointsEnd}" EndPoint="{TemplateBinding CustomFirstTipPointsEnd}" Stroke="White" StrokeThickness="3"/>
+			<Polygon Points="{TemplateBinding CustomListTipPoints}" Fill="White" StrokeThickness="2" Stroke="Black"/>
+		</Panel>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+</Styles>
