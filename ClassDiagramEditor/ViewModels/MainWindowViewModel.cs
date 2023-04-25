@@ -21,7 +21,7 @@ namespace ClassDiagramEditor.ViewModels
         private bool addDiagramCheck;
         private bool scaleDiagramCheck;
         private bool deleteDiagramCheck;
-
+        //ss
         public MainWindowViewModel()
         {
             Diagrams = new ObservableCollection<IType>();
