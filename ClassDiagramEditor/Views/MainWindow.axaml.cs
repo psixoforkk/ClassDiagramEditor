@@ -24,7 +24,7 @@ namespace ClassDiagramEditor.Views
         {
             if (pointerPressedEventArgs.Source is Control control)
             {
-                if (control.DataContext is MyTypeClass myClassDiagram)
+                if (control.DataContext is AbstractDiagram myClassDiagram)
                 {
                     if (this.DataContext is MainWindowViewModel mainWindowViewModel)
                     {
@@ -128,7 +128,7 @@ namespace ClassDiagramEditor.Views
                             {
                                 if (connector.Name == "Connector")
                                 {
-                                    AssociationConnectorClass newConnector = connector as AssociationConnectorClass;
+                                    AbstractConnector newConnector = connector as AbstractConnector;
                                     if (newConnector.FirstDiagram == myClassDiagram || newConnector.SecondDiagram == myClassDiagram)
                                     {
                                         mainWindowViewModel.Diagrams.Remove(connector);
@@ -136,39 +136,6 @@ namespace ClassDiagramEditor.Views
                                 }
                             }
                             mainWindowViewModel.Diagrams.Remove(myClassDiagram);
-                        }
-                    }
-                }
-                else if (control.DataContext is MyTypeInterface myInterfaceDiagram)
-                {
-                    if (this.DataContext is MainWindowViewModel mainWindowViewModel)
-                    {
-                        if (mainWindowViewModel.AddDiagramCheck == true)
-                        {
-                            pointPointerPressed = pointerPressedEventArgs
-                            .GetPosition(
-                            this.GetVisualDescendants()
-                            .OfType<Canvas>()
-                            .FirstOrDefault(canvas => string.IsNullOrEmpty(canvas.Name) == false &&
-                             canvas.Name.Equals("canvas")));
-                            if (pointerPressedEventArgs.Source is not Rectangle)
-                            {
-                                pointerPositionIntoShape = pointerPressedEventArgs.GetPosition(control);
-                                this.PointerMoved += PointerMoveDragShape;
-                                this.PointerReleased += PointerPressedReleasedDragShape;
-                            }
-                            else
-                            {
-                                
-                            }
-                        }
-                        if (mainWindowViewModel.ScaleDiagramCheck == true)
-                        {
-
-                        }
-                        if (mainWindowViewModel.DeleteDiagramCheck == true)
-                        {
-                            mainWindowViewModel.Diagrams.Remove(myInterfaceDiagram);
                         }
                     }
                 }
@@ -182,7 +149,7 @@ namespace ClassDiagramEditor.Views
                         .OfType<Canvas>()
                         .FirstOrDefault(canvas => string.IsNullOrEmpty(canvas.Name) == false &&
                         canvas.Name.Equals("canvas")));
-                        mainWindowViewModel.Diagrams.Add(new MyTypeInterface
+                        mainWindowViewModel.Diagrams.Add(new MyTypeInterface("Interface")
                         {
                             StartPoint = pointPointerPressed
                         });
@@ -195,7 +162,7 @@ namespace ClassDiagramEditor.Views
                         .OfType<Canvas>()
                         .FirstOrDefault(canvas => string.IsNullOrEmpty(canvas.Name) == false &&
                         canvas.Name.Equals("canvas")));
-                        mainWindowViewModel.Diagrams.Add(new MyTypeClass
+                        mainWindowViewModel.Diagrams.Add(new MyTypeClass("Class")
                         {
                             StartPoint = pointPointerPressed
                         });
@@ -348,6 +315,75 @@ namespace ClassDiagramEditor.Views
                             return;
                         }
                         connector.SecondDiagram = secondTypeClass;
+                        return;
+                    }
+                }
+                if (rectangle.DataContext is MyTypeInterface secondTypeInterface)
+                {
+                    if (mainWindowViewModel.AssociationConnectorCheck == true)
+                    {
+                        AssociationConnectorClass connector = mainWindowViewModel.Diagrams[mainWindowViewModel.Diagrams.Count - 1] as AssociationConnectorClass;
+                        if (connector.FirstDiagram == secondTypeInterface)
+                        {
+                            mainWindowViewModel.Diagrams.Remove(connector);
+                            return;
+                        }
+                        connector.SecondDiagram = secondTypeInterface;
+                        return;
+                    }
+                    if (mainWindowViewModel.InheritanceConnectorCheck == true)
+                    {
+                        InheritanceConnectorClass connector = mainWindowViewModel.Diagrams[mainWindowViewModel.Diagrams.Count - 1] as InheritanceConnectorClass;
+                        if (connector.FirstDiagram == secondTypeInterface)
+                        {
+                            mainWindowViewModel.Diagrams.Remove(connector);
+                            return;
+                        }
+                        connector.SecondDiagram = secondTypeInterface;
+                        return;
+                    }
+                    if (mainWindowViewModel.ImplementationConnectorCheck == true)
+                    {
+                        ImplementationConnectorClass connector = mainWindowViewModel.Diagrams[mainWindowViewModel.Diagrams.Count - 1] as ImplementationConnectorClass;
+                        if (connector.FirstDiagram == secondTypeInterface)
+                        {
+                            mainWindowViewModel.Diagrams.Remove(connector);
+                            return;
+                        }
+                        connector.SecondDiagram = secondTypeInterface;
+                        return;
+                    }
+                    if (mainWindowViewModel.DependencyConnectorCheck == true)
+                    {
+                        DependencyConnectorClass connector = mainWindowViewModel.Diagrams[mainWindowViewModel.Diagrams.Count - 1] as DependencyConnectorClass;
+                        if (connector.FirstDiagram == secondTypeInterface)
+                        {
+                            mainWindowViewModel.Diagrams.Remove(connector);
+                            return;
+                        }
+                        connector.SecondDiagram = secondTypeInterface;
+                        return;
+                    }
+                    if (mainWindowViewModel.AggregationConnectorCheck == true)
+                    {
+                        AggregationConnectorClass connector = mainWindowViewModel.Diagrams[mainWindowViewModel.Diagrams.Count - 1] as AggregationConnectorClass;
+                        if (connector.FirstDiagram == secondTypeInterface)
+                        {
+                            mainWindowViewModel.Diagrams.Remove(connector);
+                            return;
+                        }
+                        connector.SecondDiagram = secondTypeInterface;
+                        return;
+                    }
+                    if (mainWindowViewModel.CompositionConnectorCheck == true)
+                    {
+                        CompositionConnectoClass connector = mainWindowViewModel.Diagrams[mainWindowViewModel.Diagrams.Count - 1] as CompositionConnectoClass;
+                        if (connector.FirstDiagram == secondTypeInterface)
+                        {
+                            mainWindowViewModel.Diagrams.Remove(connector);
+                            return;
+                        }
+                        connector.SecondDiagram = secondTypeInterface;
                         return;
                     }
                 }

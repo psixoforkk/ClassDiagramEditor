@@ -26,21 +26,20 @@ namespace ClassDiagramEditor.ViewModels
         {
             Diagrams = new ObservableCollection<IType>();
             AddDiagramCheck = true;
-            Diagrams.Add(new MyTypeClass
+            Diagrams.Add(new MyTypeClass("Name")
             {
                 Height = 100,
                 Width = 100,
-                Name = "Name",
                 StartPoint = new Avalonia.Point(100, 100)
             });
-            Diagrams.Add(new MyTypeClass
+            Diagrams.Add(new MyTypeClass("Name1")
             {
                 Height = 100,
                 Width = 100,
                 Name = "Name1",
                 StartPoint = new Avalonia.Point(500, 100)
             });
-            Diagrams.Add(new MyTypeInterface
+            Diagrams.Add(new MyTypeInterface("Name1")
             {
                 Height = 100,
                 Width = 100,
